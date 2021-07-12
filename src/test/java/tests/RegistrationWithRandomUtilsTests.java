@@ -8,10 +8,15 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
-import static tests.TestData.firstName;
-import static tests.TestData.lastName;
+import static utils.RandomUtils.getRandomEmail;
+import static utils.RandomUtils.getRandomString;
 
-public class RegistrationWithTestDataTests {
+
+public class RegistrationWithRandomUtilsTests {
+
+    public static String firstName = getRandomString(10);
+    public static String lastName = getRandomString(10);
+    public static String email = getRandomEmail();
 
     @BeforeAll
     static void setup() {
@@ -26,7 +31,7 @@ public class RegistrationWithTestDataTests {
 
         $("#firstName").val(firstName);
         $("#lastName").val(lastName);
-        $("#userEmail").val("alex@egorov.com");
+        $("#userEmail").val(email);
         $("[name=gender][value=Other]").parent().click();
         $("#userNumber").val("1231231231");
         $("#dateOfBirthInput").click();
@@ -44,6 +49,6 @@ public class RegistrationWithTestDataTests {
         $("#submit").click();
 
         $(".modal-title").shouldHave(text("Thanks for submitting the form"));
-        $(".table-responsive").shouldHave(text(firstName + " " + lastName), text("alex@egorov.com"));
+        $(".table-responsive").shouldHave(text(firstName + " " + lastName), text(email));
     }
 }
